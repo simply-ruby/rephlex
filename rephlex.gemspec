@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   Fast and Fun. A ruby micro-framework built on Roda, Sequel, and Phlex
   DESCRIPTION
 
-  spec.homepage = "https://github.com/RomanTurner/rephlex"
+  spec.homepage = "https://github.com/simply-ruby/rephlex"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
