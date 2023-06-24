@@ -10,9 +10,7 @@ module Rephlex
     include TemplateHelper
     include PathHelper
     include TTYHelper
-    # Execute this command
-    #
-    # @api public
+
     def execute(*)
       raise(
         NotImplementedError,
