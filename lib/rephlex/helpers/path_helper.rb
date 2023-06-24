@@ -15,12 +15,15 @@ module PathHelper
   end
 
   def grep_app_name_from_config(file)
+    file = File.open(file, "r") unless file.is_a?(File)
+
     regex = /.freeze\.app/
     file.grep(regex) do |line|
       variable = line.match(/run\s+(\w+)\.freeze\.app/)[1]
       return variable
     end
     nil
+  ensure
+    file.close if file.is_a?(File) && file != $stdin
   end
-
 end

@@ -7,6 +7,7 @@ class GeneratorTest < Minitest::Test
   include IoTestHelpers
   def setup
     require_relative "../lib/rephlex/commands/generate.rb"
+    File.open("config.ru", "w") { |file| file.write("run Test.freeze.app") }
   end
 
   #############################
@@ -74,5 +75,6 @@ class GeneratorTest < Minitest::Test
 
   def teardown
     FileUtils.rm_rf("app")
+    File.delete("config.ru") if File.exist?("config.ru")
   end
 end

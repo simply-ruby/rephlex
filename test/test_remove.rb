@@ -5,6 +5,10 @@ require_relative "../lib/rephlex/commands/remove.rb"
 class RemoveTest < Minitest::Test
   include IoTestHelpers
 
+  def setup
+    File.open("config.ru", "w") { |file| file.write("run Test.freeze.app") }
+  end
+
   #############################
   #       Data Model          #
   #############################
@@ -151,5 +155,6 @@ class RemoveTest < Minitest::Test
   def teardown
     FileUtils.rm_rf("app")
     FileUtils.rm_rf("db")
+    File.delete("config.ru") if File.exist?("config.ru")
   end
 end

@@ -31,7 +31,6 @@ module Rephlex
             m.choice "Provider", :provider
             m.choice "Migration", :migration
             m.choice "Route", :route
-            m.choice "Route (CRUD)", :route_crud
           end
 
         case generator
@@ -44,7 +43,6 @@ module Rephlex
           #        columns: result[:columns],
           #        index: index
           # invoke Generator, "data_model", model_name: result[:table]
-          # invoke Generator, "crud_routes", model_name: result[:table]
         when :data_model
           generate_data_model
         when :decorator
@@ -60,16 +58,19 @@ module Rephlex
         end
       end
 
-      def get_input(res)
-        input = identify_resource(res)
-        modules = modulify(input)
-        @context[:path] = input
-        [input, modules]
+      def generate_allocation(verbose: true)
+      input, modules = get_input("allocation")
+
       end
 
       def generate_data_model(verbose: true)
         input, modules = get_input("data model")
-        @context[:res_name] = input.gsub("/", "_")
+        data_model_context = Struct.new(:path, :table_name, :inflector)
+        @context = data_model_context.new(input, input.gsub("/", "_"), Dry::Inflector.new)
+        _generate_data_model(verbose: verbose, modules: modules)
+      end
+
+      def _generate_data_model(verbose: true, modules: [])
         TTY::File.copy_file(
           base_path("lib/rephlex/templates/data_model.erb"),
           base_path("app/%path%/data_model.rb"),
@@ -99,7 +100,8 @@ module Rephlex
       end
 
       def generate_migration(verbose: true)
-        migration_name = @prompt.ask("Enter migration name (format snake_case): ")
+        migration_name =
+          @prompt.ask("Enter migration name (format snake_case): ")
         TTY::File.copy_file(
           base_path("lib/rephlex/templates/migration.erb"),
           base_path("db/migrations/#{timestamp}_#{migration_name}.rb")
@@ -127,6 +129,13 @@ module Rephlex
       end
 
       private
+
+      def get_input(res)
+        input = identify_resource(res)
+        modules = modulify(input)
+        @context[:path] = input
+        [input, modules]
+      end
 
       def identify_resource(resource)
         @prompt.ask(
