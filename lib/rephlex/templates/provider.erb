@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+Application.register_provider(<%= provider.to_sym %>) do |_container|
+  prepare { "require 'something'"}
+
+  start do
+    # if you neeed access to a different provider before initializing this use:
+    # target.start :name_of_provider
+
+    var = "Your configured class"
+
+    # Register database component.
+    register(<%= provider.to_sym %>, var)
+  end
+end

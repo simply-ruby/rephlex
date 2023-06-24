@@ -5,6 +5,11 @@ $LOAD_PATH.unshift(
 )
 
 
-require 'rephlex'
+require 'rephlex/cli'
 
-puts Rephlex::the_beginning
+begin
+    Rephlex::CLI.start
+  rescue Rephlex::CLI::Error => err
+    puts "ERROR: #{err.message}"
+    exit 1
+  end

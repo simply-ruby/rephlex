@@ -1,0 +1,33 @@
+Sequel.migration do
+  change do
+    # Use Sequel DSL to define your migration operations here
+    # For example:
+    # create_table :users do
+    #   primary_key :id
+    #   String :name
+    #   Integer :age
+    #   DateTime :created_at
+    #   DateTime :updated_at
+    # end
+
+    # add_column :table_name, :column_name, :data_type
+    # drop_table :table_name
+    # rename_table :old_name, :new_name
+    # and more...
+
+    # if change can not infer the reverse you can use up and down blocks:
+
+    # up do
+      # The operations to be performed when applying the migration
+      # Use Sequel DSL to perform the necessary changes
+    # end
+
+    # down do
+      # The operations to be performed when rolling back the migration
+      # Use Sequel DSL to revert the changes made in the 'up' block
+    # end
+
+    # visit https://sequel.jeremyevans.net/rdoc/files/doc/schema_modification_rdoc for more
+    # information on how to perform migrations with Sequel
+  end
+end

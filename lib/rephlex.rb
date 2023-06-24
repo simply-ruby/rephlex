@@ -3,8 +3,18 @@
 require_relative "rephlex/version"
 
 module Rephlex
-  class Error < StandardError; end
-  def the_beginning
-    "This is start of something fun; now go, create!"
+  class Error < StandardError
+  end
+
+  def self.root
+    @root ||= Dir.pwd
+  end
+
+  def self.root=(path)
+    @root = path
+  end
+
+  def self.app_name
+    "Test"
   end
 end
