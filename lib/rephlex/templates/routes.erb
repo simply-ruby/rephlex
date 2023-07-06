@@ -1,22 +1,36 @@
+<%
+path_helper =
+    (
+      if nested?
+        modules.map { |el| "#{el.downcase}/:#{el.downcase}_id" }.join("/")
+      else
+        "#{path}/:id"
+      end
+    )
+query = nested? ? ".first(#{modules.map { |el| "#{el.downcase}_id: @#{el.downcase}.id" }.join(',')})" : "[i]"
+%>
 route do |r|
-  # index
-  r.root {}
-
-  r.on Integer do |i|
-
-  # show /<%= res_name %>/:id
+# index
+r.root {}
+r.on Integer do |i|
+<% modules.each_with_index do |mod, index| -%>
+<% if index < modules.length - 1 %>
+  @<%= mod.downcase %> = opts[:<%= mod.downcase %>]
+<% end %><% end -%>
+<% if nested? -%>
+  @<%= modules.last.downcase %> = <%= modules.last %>::DataModel[i]
+<% end -%>
+  @<%= instance_name %> = <%= class_name %>::DataModel<%= query%>
+  # show /<%= path_helper %>
   r.get do
   end
-
-  # create /<%= res_name %>/:id
+  # create /<%= path_helper %>
   r.post do
   end
-
-  # update /<%= res_name %>/:id
+  # update /<%= path_helper %>
   r.patch do
   end
-
-  # delete /<%= res_name %>/:id
+  # delete /<%= path_helper %>
   r.delete do
   end
-end
+  end

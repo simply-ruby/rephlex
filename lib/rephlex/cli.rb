@@ -3,6 +3,8 @@ require "pastel"
 require "tty-font"
 require "debug"
 
+require_relative "commands/database"
+
 module Rephlex
   class CLI < Thor
     class << self
@@ -14,6 +16,7 @@ module Rephlex
     end
 
     def help(*args)
+      binding.break
       font = TTY::Font.new(:standard)
       pastel = Pastel.new(enabled: !options["no-color"])
       puts pastel.magenta(font.write("Rephlex"))
@@ -52,5 +55,8 @@ module Rephlex
         Rephlex::Commands::Remove.new(options).execute
       end
     end
+
+    desc "db", "Manage creation and migration of your database."
+    subcommand "db", Commands::Database
   end
 end

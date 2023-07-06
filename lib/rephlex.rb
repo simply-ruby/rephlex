@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'debug'
 require_relative "rephlex/version"
 require_relative "rephlex/helpers/path_helper"
 module Rephlex

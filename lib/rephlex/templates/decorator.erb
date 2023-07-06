@@ -1,2 +1,2 @@
-class <%= inflector.classify(prefix) %>Decorator < DelegateClass(<%= parent %>::DataModel)
+class <%= inflector.classify(prefix) %>Decorator < DelegateClass(<%= inflector.classify(path) %>::DataModel)
 end

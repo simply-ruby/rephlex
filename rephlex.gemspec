@@ -45,6 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty-prompt"
   spec.add_dependency "tty-font"
   spec.add_dependency "tty-file"
+  spec.add_dependency "tomlrb"
   spec.add_dependency "pastel"
   spec.add_dependency "thor"
   # For more information and examples about making a new gem, check out our
